@@ -64,7 +64,7 @@ def standarize_data(x_test):
     numerical_features = [col for col in x_test.columns if col not in ["New user", "Returning user", "Chrome", "Edge", "Facebook", "Firefox", "Safari", "Windows", "iOS", "Mac", "Android"]]
     
     # Load the StandardScaler object from the pickle file
-    with open('scaler.pkl', 'rb') as file:
+    with open('Saved_Model/scaler.pkl', 'rb') as file:
         scaler = pickle.load(file)
 
     # Transform the numerical features in x_train and x_test
@@ -75,7 +75,7 @@ def standarize_data(x_test):
 def pca_data(x_test):
     #print(x_test)
     # Load the PCA object from the pickle file
-    with open('pca_model.pkl', 'rb') as file:
+    with open('Saved_Model/pca_model.pkl', 'rb') as file:
         pca = pickle.load(file)
 
     x_test_pca = pca.transform(x_test)
@@ -87,7 +87,7 @@ def predict(x_test_pca):
     #with open('svm_model.pkl', 'rb') as file:
         #model = pickle.load(file)
 
-    model = joblib.load('svm_model.pkl')
+    model = joblib.load('Saved_Model/svm_model.pkl')
     # Predict the target values
     #y_pred = model.decision_function(x_test_pca)
     y_pred = model.predict(x_test_pca)
