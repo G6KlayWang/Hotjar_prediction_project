@@ -5,7 +5,8 @@ from sklearn.decomposition import PCA
 import pickle
 import joblib
 
-DROP_LIST = ["Recording URL", "Publicly Shared", "Already Watched", "Comments", "Labels", "Created", "Hotjar User ID", "Country", "Referrer URL", "Landing Page URL", "Exit Page URL", "Events",'Device','Device Screen Size', "Incoming Feedback", 'Net Promoter Score®']
+#DROP_LIST = ["Recording URL", "Publicly Shared", "Already Watched", "Comments", "Labels", "Created", "Hotjar User ID", "Country", "Referrer URL", "Landing Page URL", "Exit Page URL", 'Device','Device Screen Size', "Incoming Feedback", 'Net Promoter Score®']
+DROP_LIST = ["Recording URL", "Publicly Shared", "Already Watched", "Comments", "Labels", "Created", "Hotjar User ID", "Country", "Referrer URL", "Landing Page URL", "Exit Page URL", 'Events\r','Device','Device Screen Size', "Incoming Feedback", 'Net Promoter Score®']
 BINARIZE_LIST = ['New / Returning', 'Browser', 'Operating System']
 orig_df = pd.read_csv("Data/testt.csv")
 #**************************************************** Data Cleaning ****************************************************
@@ -57,6 +58,12 @@ def data_cleaning(file_name):
     df = order_columns(df)
     return df
 
+def data_cleaning_flask(df):
+    df = drop_columns(df)
+    df = binarize_column(df)
+    df = order_columns(df)
+    return df
+
 #**************************************************** Data Splitting ****************************************************
 
 def standarize_data(x_test):
@@ -96,13 +103,22 @@ def predict(x_test_pca):
 
 def get_prediction(file_name):
     df = data_cleaning(file_name)
-    print(df)
+    #print(df)
     x_test = standarize_data(df)
     x_test_pca = pca_data(x_test)
     y_pred = predict(x_test_pca)
 
     return y_pred
 
+def get_prediction_flask(df):
+    df = data_cleaning_flask(df)
+    #print(df)
+    x_test = standarize_data(df)
+    x_test_pca = pca_data(x_test)
+    y_pred = predict(x_test_pca)
+
+    return y_pred
+    
 #print(get_prediction('testt.csv'))
 
 
