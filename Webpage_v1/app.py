@@ -12,10 +12,12 @@ CORS(app)  # This is to handle Cross-Origin Resource Sharing (CORS) issues.
 def predict():
     # Get the JSON data sent to the Flask server
     data = request.get_json()
+
+    if data is None:
+        return jsonify({"error": "No data received"}), 400
     
     # Convert JSON data to DataFrame
     df = pd.DataFrame(data)
-    print(df)
     
     # Remove the last row of the DataFrame
     df = df.iloc[:-1]
@@ -23,8 +25,16 @@ def predict():
     # Make predictions with the SVM model
     predictions = Util.get_prediction_flask(df)
     
-    # Convert predictions to a list and send it back as JSON
-    return jsonify(predictions.tolist())
+    # Add predictions to the original dataframe
+    df['Predictions'] = predictions
+    df['Number ID'] = df.reset_index().index
+    
+    result_df = df[['Number ID', 'Predictions', 'Recording URL']]
+    
+    # Convert DataFrame to list of dictionaries
+    result = result_df.to_dict(orient='records')
+    
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

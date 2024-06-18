@@ -8,11 +8,12 @@ body {
 }
 
 .container {
+    position: relative; /* Add this to use absolute positioning for the logo */
     background: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 80%;
-    max-width: 600px;
+    width: 100%; /* Increase width to 100% */
+    max-width: 1200px; /* Increase max-width */
 }
 
 input[type="file"] {
@@ -40,4 +41,32 @@ pre {
     overflow: auto;
     width: 100%;
     border: 1px solid #ddd;
+    white-space: pre-wrap; /* Allow wrapping within pre */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.logo {
+    position: absolute; /* Absolute positioning within the container */
+    top: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    width: 100px; /* Adjust as needed */
+    height: auto;
 }
