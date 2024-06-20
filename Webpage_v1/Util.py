@@ -26,9 +26,10 @@ def binarize_column(temp_df):
     
     new_df = oneHot_user(temp_df, 'New / Returning')
     browser_df = oneHot_user(new_df, 'Browser')
-    check_df = check_missing_columns(browser_df)
-    os_df = oneHot_user(check_df, 'Operating System')
-    return os_df
+    
+    os_df = oneHot_user(browser_df, 'Operating System')
+    check_df = check_missing_columns(os_df)
+    return check_df
 
 def check_missing_columns(df):
     # Check if the dataframe has the required columns
