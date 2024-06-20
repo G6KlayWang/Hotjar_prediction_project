@@ -32,7 +32,7 @@ def binarize_column(temp_df):
 
 def check_missing_columns(df):
     # Check if the dataframe has the required columns
-    required_columns = ['Facebook', 'Firefox', 'Safari', 'Android']
+    required_columns = ["New user", "Returning user", "Chrome", "Edge", "Windows", 'Facebook', 'Firefox', 'Safari', 'Android']
     missing_columns = set(required_columns) - set(df.columns)
 
     # Add missing columns with all values being False
@@ -42,9 +42,10 @@ def check_missing_columns(df):
     return df
 
 def order_columns(df):
+    print(df)
     # Get the column names of the numerical features
     numerical_features = [col for col in df.columns if col not in ["New user", "Returning user", "Chrome", "Edge", "Facebook", "Firefox", "Safari", "Windows", "iOS", "Mac", "Android"]]
-
+    
     # Order the columns
     df = df[numerical_features + ["New user", "Returning user", "Chrome", "Edge", "Facebook", "Firefox", "Safari", "Android", "Mac", "Windows"]]
 
